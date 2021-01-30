@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery, gql } from '@apollo/client';
 import { Row, Col, Spin } from 'antd';
 import HotelCard from '../Components/Card/HotelCard';
+import { FETCH_HOTELS } from '../Query/FetchQuery';
 
 const style = { padding: "16px" }
 
@@ -44,23 +45,5 @@ const Home = () => {
         </div >
     )
 }
-
-const FETCH_HOTELS = gql`
-    {
-        hotels(orderBy: createdAt_DESC)
-        {
-            createdAt
-            id
-            name
-            website
-            description
-            photos 
-            {
-                id
-                url
-            }
-        }
-    }
-`
 
 export default Home

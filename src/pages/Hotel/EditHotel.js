@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Form, message, Spin } from 'antd';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import HotelForm from '../../Components/Form/HotelForm';
 import { useHistory } from 'react-router-dom';
+import { EDIT_HOTEL } from '../../Query/MutationQuery';
 
 const EditHotel = (props) => {
 
@@ -15,12 +16,21 @@ const EditHotel = (props) => {
 
     const onFinish = async (values) => {
         try {
+            let arr = values.photos.map(url => ({
+                id: url
+            }))
             setEditing(true);
             await editHotel({
                 variables: {
                     data: {
                         ...values,
-                        rooms: parseInt(values.rooms)
+                        amenities: {
+                            set: values.amenities
+                        },
+                        rooms: parseInt(values.rooms),
+                        photos: {
+                            set: arr
+                        }
                     },
                     id: {
                         id: hotelId
@@ -44,17 +54,5 @@ const EditHotel = (props) => {
         </>
     )
 }
-
-const EDIT_HOTEL = gql`
-mutation updateHotel($data: HotelUpdateInput!,$id: HotelWhereUniqueInput!){
-    updateHotel(data: $data,where: $id){
-      id
-      name
-      description
-      rooms
-      phone
-    }
-  }
-`;
 
 export default EditHotel

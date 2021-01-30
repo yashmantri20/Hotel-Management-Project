@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Row, Col } from 'antd';
 import HotelCard from '../../Components/Card/HotelCard';
 import { Pagination, Spin } from "antd";
 import { IoMdAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { FETCH_HOTELS } from '../../Query/FetchQuery';
 
 
 const style = { padding: '20px' };
@@ -73,23 +74,5 @@ const Hotel = () => {
         </div >
     )
 }
-
-const FETCH_HOTELS = gql`
-    {
-        hotels
-        {
-            createdAt
-            id
-            name
-            website
-            description
-            photos 
-            {
-                id
-                url
-            }
-        }
-    }
-`
 
 export default Hotel

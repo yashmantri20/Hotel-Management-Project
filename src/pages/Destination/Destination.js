@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Row, Col } from 'antd';
 import { Pagination, Spin } from "antd";
 import { IoMdAddCircle } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import DestinationCard from '../../Components/Card/DestinationCard';
-
+import { FETCH_DESTINATIONS } from '../../Query/FetchQuery';
 
 const style = { padding: '16px' };
 
@@ -77,19 +77,5 @@ const Destination = () => {
         </div >
     )
 }
-
-const FETCH_DESTINATIONS = gql`
-   {
-  destinations{
-    id
-    name
-    location
-    description
-    image{
-      url
-    }
-  }
-}
-`
 
 export default Destination

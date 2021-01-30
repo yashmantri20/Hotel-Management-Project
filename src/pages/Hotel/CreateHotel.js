@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Form, message, Spin } from 'antd';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import HotelForm from '../../Components/Form/HotelForm';
 import { useHistory } from 'react-router-dom';
+import { CREATE_HOTEL } from '../../Query/MutationQuery';
 
 const CreateHotel = () => {
 
@@ -17,7 +18,6 @@ const CreateHotel = () => {
             let arr = values.photos.map(url => ({
                 id: url
             }))
-            console.log(values.amenities)
             setCreating(true);
             await createHotel({
                 variables: {
@@ -50,27 +50,5 @@ const CreateHotel = () => {
         </>
     )
 }
-
-const CREATE_HOTEL = gql`
-mutation createHotel(
-    $data: HotelCreateInput!
-  )
-  {
-    createHotel(
-        data: $data
-    )
-    {
-        id
-        name
-        description
-        rooms
-        amenities
-        phone
-        photos{
-           url
-        }
-    }
-  }
-`;
 
 export default CreateHotel

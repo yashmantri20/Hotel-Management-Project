@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Form, message, Spin } from 'antd';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import DestinationForm from '../../Components/Form/DestinationForm';
+import { EDIT_DESTINATION } from '../../Query/MutationQuery';
 
 const EditDestination = (props) => {
 
@@ -20,6 +21,11 @@ const EditDestination = (props) => {
                 variables: {
                     data: {
                         ...values,
+                        image: {
+                            connect: {
+                                id: values.image
+                            }
+                        }
                     },
                     id: {
                         id: destinationId
@@ -35,27 +41,12 @@ const EditDestination = (props) => {
     };
 
     return (
-        <center>
-            <p style={{ fontSize: 52, margin: "20px" }}>Edit Destination Form</p>
+        <>
+            <p style={{ fontSize: 52, margin: "20px", textAlign: "center" }}>Edit Destination Form</p>
             <DestinationForm onFinish={onFinish} form={form} />
-            { editing ? <Spin size="large" /> : ""}
-        </center>
+            { editing ? <center><Spin size="large" /></center> : ""}
+        </>
     )
 }
-
-const EDIT_DESTINATION = gql`
-mutation updateDestination($data: DestinationUpdateInput!,$id: DestinationWhereUniqueInput!){
-    updateDestination(data: $data,where: $id)
-    {
-        id
-        name
-        location
-        description
-        image{
-            url
-        }
-    }
-}
-`
 
 export default EditDestination

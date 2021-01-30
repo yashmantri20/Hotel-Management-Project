@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { Form, Input, Button, Tag, Select, Spin } from 'antd';
-import { gql, useQuery } from '@apollo/client';
-
-// const { CheckableTag } = Tag;
+import React from 'react'
+import { Form, Input, Button, Select, Spin } from 'antd';
+import { useQuery } from '@apollo/client';
+import { FETCH_ASSETS } from '../../Query/FetchQuery';
 
 const { Option } = Select;
 
@@ -143,8 +142,8 @@ const HotelForm = ({ onFinish, form }) => {
                         <center>
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">
-                                    Add a Hotel
-                    </Button>
+                                    Submit
+                                </Button>
                             </Form.Item>
                         </center>
                     </Form>
@@ -152,14 +151,5 @@ const HotelForm = ({ onFinish, form }) => {
         </>
     )
 }
-
-const FETCH_ASSETS = gql`
-{
-  assets{
-    id
-    url
-  }
-}
-`
 
 export default HotelForm

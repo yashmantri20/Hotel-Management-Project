@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, Spin, Select } from 'antd';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { FETCH_ASSETS } from '../../Query/FetchQuery';
 
 const loadingstyle = {
     display: "flex",
@@ -42,13 +43,6 @@ const DestinationForm = ({ onFinish, form }) => {
                             <Input.TextArea placeholder="Please Enter the Description" />
                         </Form.Item>
 
-                        {/* <Form.Item
-            label="Image1 Link"
-            name="photos"
-            rules={[{ required: true, message: 'Please Enter the ImageLink!' }]}
-        >
-            <Input placeholder="Please Enter the ImageLink" />
-        </Form.Item> */}
                         <Form.Item
                             label="Image"
                             name="image"
@@ -56,7 +50,6 @@ const DestinationForm = ({ onFinish, form }) => {
                         >
                             <Select
                                 placeholder="Select an asset"
-                                // onChange={handleChange}
                                 optionLabelProp="label"
                             >
                                 {data.assets.map(image =>
@@ -80,7 +73,7 @@ const DestinationForm = ({ onFinish, form }) => {
                         <Form.Item>
                             <center>
                                 <Button type="primary" htmlType="submit">
-                                    Add a Destination
+                                    Submit
                                 </Button>
                             </center>
                         </Form.Item>
@@ -89,14 +82,5 @@ const DestinationForm = ({ onFinish, form }) => {
         </>
     )
 }
-
-const FETCH_ASSETS = gql`
-{
-  assets{
-    id
-    url
-  }
-}
-`
 
 export default DestinationForm

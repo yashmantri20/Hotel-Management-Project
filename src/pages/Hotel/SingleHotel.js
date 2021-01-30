@@ -1,8 +1,10 @@
 import React from 'react'
 import { Spin, Carousel, Tag, message } from 'antd';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { FiEdit, FiDelete } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
+import { DELETE_HOTEL } from '../../Query/MutationQuery';
+import { FETCH_HOTEL } from '../../Query/FetchQuery';
 
 const contentStyle = {
     maxHeight: '460px',
@@ -82,13 +84,13 @@ const SingleHotel = (props) => {
                                 <h3 style={{ marginTop: 10 }}>Description : {data.hotel.description}</h3>
                                 <h3 style={{ marginTop: 10 }}>Amenities :</h3>
                                 <h3 style={{ lineHeight: 1 }}>
-                                    {data.hotel.amenities.map(amenitie => <Tag color="#000">{amenitie}</Tag>
+                                    {data.hotel.amenities.map(amenitie => <Tag key={amenitie} color="#000">{amenitie}</Tag>
                                     )}
                                 </h3>
                                 <h3 style={{ marginTop: 10 }}>Rooms : {data.hotel.rooms}</h3>
                                 <h3 style={{ marginTop: 10 }}>Phone Number : {data.hotel.phone}</h3>
                             </div>
-                        </div> : <h1>Error</h1>
+                        </div> : <h1>Hotel does not exist</h1>
                     }
                 </div>
             }
@@ -96,36 +98,4 @@ const SingleHotel = (props) => {
     )
 }
 
-
-
-const FETCH_HOTEL = gql`
-query gethotel($id: ID!)
-{
-  hotel(where:{
-    id: $id
-  }){
-    id
-    name
-    description
-    rooms
-    phone
-    website
-    amenities
-    photos{
-        id
-        url
-    }
-  }
-}
-`
-const DELETE_HOTEL = gql`
-mutation deleteHotel($id: ID!){
-  deleteHotel(where: {
-    id: $id
-  }){
-    id
-    name
-  }
-}
-`
 export default SingleHotel

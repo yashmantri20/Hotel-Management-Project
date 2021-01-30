@@ -1,8 +1,10 @@
 import React from 'react'
-import { Spin, Carousel, Tag } from 'antd';
-import { useQuery, gql } from '@apollo/client';
-import { FiEdit } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Spin, Carousel, Tag, message } from 'antd';
+import { useQuery, useMutation } from '@apollo/client';
+import { FiEdit, FiDelete } from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
+import { DELETE_DESTINATION } from '../../Query/MutationQuery';
+import { FETCH_DESTINATION } from '../../Query/FetchQuery';
 
 const contentStyle = {
     height: '500px',
@@ -20,12 +22,31 @@ const loadingstyle = {
 
 const SingleDestination = (props) => {
 
+    let history = useHistory();
+
     const destinationId = props.match.params.destinationId;
     const { loading, error, data } = useQuery(FETCH_DESTINATION, {
         variables: {
             id: destinationId
         }
     });
+
+    const [deleteDestination] = useMutation(DELETE_DESTINATION);
+
+
+    const handleClick = async () => {
+        try {
+            await deleteDestination({
+                variables: {
+                    id: destinationId
+                }
+            })
+            message.success("Destination Deleted")
+            history.push('/destinations')
+        } catch (e) {
+            message.error("Please Try Again")
+        }
+    };
 
     return (
         <>
@@ -35,8 +56,10 @@ const SingleDestination = (props) => {
             ) :
                 <div>
                     <Link to={`/destinations/${destinationId}/edit`}>
-                        <FiEdit size="40px" style={{ position: "fixed", zIndex: "1", bottom: 30, right: 40 }} />
+                        <FiEdit size="40px" style={{ position: "fixed", zIndex: "1", bottom: 30, right: 100 }} />
                     </Link>
+
+                    <FiDelete onClick={handleClick} size="40px" style={{ cursor: "pointer", position: "fixed", zIndex: "1", bottom: 30, right: 40 }} />
 
                     {data.destination.image ?
                         <Carousel autoplay={true} >
@@ -68,25 +91,5 @@ const SingleDestination = (props) => {
         </>
     )
 }
-
-
-
-const FETCH_DESTINATION = gql`
-query getdesination($id: ID!){
-  destination(where: {
-    id: $id
-  }){
-    id
-    name
-    location
-    description
-    image{
-      url
-    }
-  }
-}
-`
-
-
 
 export default SingleDestination

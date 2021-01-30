@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Form, message, Spin } from 'antd';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import DestinationForm from '../../Components/Form/DestinationForm';
 import { useHistory } from 'react-router-dom';
+import { CREATE_DESTINATION } from '../../Query/MutationQuery';
 
 const CreateDestination = () => {
 
@@ -45,19 +46,5 @@ const CreateDestination = () => {
         </>
     )
 }
-
-const CREATE_DESTINATION = gql`
-mutation createDestination($data: DestinationCreateInput!){
-createDestination(data: $data){
-  id
-  name
-  location
-  description
-  image{
-    url
-  }
-}
-}
-`;
 
 export default CreateDestination
