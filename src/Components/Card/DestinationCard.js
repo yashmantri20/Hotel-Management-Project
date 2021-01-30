@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
-const HotelCard = ({ id, name, url }) => {
+const DestinationCard = ({ id, name, image }) => {
+
     return (
-        <Link to={`/hotels/${id}`}>
+        <Link to={`/destinations/${id}`}>
             <Card
                 hoverable
                 style={{ width: 240 }}
-                cover={<img alt="homeimage" src={url} height={180} />}
+                cover={<img alt="homeimage" src={image} height={180} />}
             >
                 <Meta title={name} />
             </Card>
@@ -18,4 +19,4 @@ const HotelCard = ({ id, name, url }) => {
     )
 }
 
-export default HotelCard
+export default DestinationCard

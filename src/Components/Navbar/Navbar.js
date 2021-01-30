@@ -1,9 +1,8 @@
 import React from 'react'
-import { Layout, Menu, Breadcrumb } from 'antd';
-import Card from '../Card/HotelCard';
-import HotelCard from '../Card/HotelCard';
+import { Layout, Menu } from 'antd';
+import { NavLink } from 'react-router-dom';
 
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 
 const Navbar = () => {
     return (
@@ -11,16 +10,11 @@ const Navbar = () => {
             <Header style={{ height: "50px" }}>
                 <div className="logo" />
                 <Menu style={{ lineHeight: "50px" }} theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1">Home</Menu.Item>
-                    <Menu.Item key="2">Hotels</Menu.Item>
-                    <Menu.Item key="3">Destinations</Menu.Item>
+                    <Menu.Item key="1"><NavLink to="/">Home</NavLink></Menu.Item>
+                    <Menu.Item key="2"><NavLink to="/hotels">Hotels</NavLink></Menu.Item>
+                    <Menu.Item key="3"><NavLink to="/destinations">Destinations</NavLink></Menu.Item>
                 </Menu>
             </Header>
-            <Content style={{ padding: '0 50px' }}>
-                <br />
-                <div className="site-layout-content"><HotelCard /></div>
-            </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>
     )
 }
